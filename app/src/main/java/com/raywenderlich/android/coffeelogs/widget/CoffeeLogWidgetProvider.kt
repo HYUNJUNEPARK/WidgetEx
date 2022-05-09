@@ -29,6 +29,7 @@ class CoffeeLogWidgetProvider : AppWidgetProvider() {
     // Enter relevant functionality for when the last widget is disabled
   }
 
+  //TODO Update Widget
   companion object {
     internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
       val coffeeLogPreferences = CoffeeLogPreferences(context)

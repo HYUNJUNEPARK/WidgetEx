@@ -13,11 +13,9 @@ import com.raywenderlich.android.coffeelogs.R
 
 class CoffeeLogLimitActivity : AppCompatActivity() {
   companion object {
-
+    var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
   }
-
   private lateinit var appWidgetText: EditText
-  private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
   private val coffeeLoggerPersistence = CoffeeLogPreferences(this)
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,8 +46,5 @@ class CoffeeLogLimitActivity : AppCompatActivity() {
   private fun updateWidget() {
     val appWidgetManager = AppWidgetManager.getInstance(this)
     CoffeeLogWidgetProvider.updateAppWidget(this, appWidgetManager, appWidgetId)
-
-
-
   }
 }

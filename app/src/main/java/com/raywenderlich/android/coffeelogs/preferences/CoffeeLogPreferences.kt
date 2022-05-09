@@ -50,6 +50,14 @@ class CoffeeLogPreferences(private val context: Context) {
     prefs.apply()
   }
 
+  // Read the prefix from the SharedPreferences object for this widget.
+  // If there is no preference saved, get the default from a resource
+  internal fun loadTitlePref(): Int {
+    val date = Date()
+    val prefs = context.getSharedPreferences(PREFS_NAME, 0)
+    return prefs.getInt(PREF_PREFIX_KEY + strFormatter.format(date), 0)
+  }
+
   // Write the prefix to the SharedPreferences object for this widget
   internal fun saveLimitPref(value: Int, widgetId: Int) {
     val prefs = context.getSharedPreferences(PREFS_NAME, 0).edit()
@@ -61,15 +69,6 @@ class CoffeeLogPreferences(private val context: Context) {
   internal fun getLimitPref(widgetId: Int): Int {
     val prefs = context.getSharedPreferences(PREFS_NAME, 0)
     return prefs.getInt(PREF_LIMIT_PREFIX + widgetId, 0)
-  }
-
-
-  // Read the prefix from the SharedPreferences object for this widget.
-  // If there is no preference saved, get the default from a resource
-  internal fun loadTitlePref(): Int {
-    val date = Date()
-    val prefs = context.getSharedPreferences(PREFS_NAME, 0)
-    return prefs.getInt(PREF_PREFIX_KEY + strFormatter.format(date), 0)
   }
 
   internal fun deletePref(widgetId: Int) {

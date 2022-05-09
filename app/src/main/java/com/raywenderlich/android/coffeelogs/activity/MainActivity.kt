@@ -58,17 +58,11 @@ class MainActivity : AppCompatActivity() {
     gramsValue = findViewById<TextView?>(R.id.grams)
     refreshTodayLabel()
 
-
-
     if (intent != null && intent.action == Constants.ADD_COFFEE_INTENT) {
       val coffeeIntake = intent.getIntExtra(Constants.GRAMS_EXTRA, 0)
       coffeeLogPreferences.saveTitlePref(todayGramsOfCoffee + coffeeIntake)
       saveCoffeeIntake(coffeeIntake)
     }
-
-
-
-
   }
 
   fun onRistrettoPressed(v: View) {
@@ -86,16 +80,34 @@ class MainActivity : AppCompatActivity() {
     saveCoffeeIntake(CoffeeTypes.LONG.grams)
   }
 
-
+  //TODO refresh limit color
   fun resetTodayLabel(v: View) {
 
 
-    //coffeeLogPreferences.deletePref()
+//    coffeeLogPreferences.deletePref(appWidgetId)
 
+
+    val appWidgetManager = AppWidgetManager.getInstance(this)
+    val appWidgetIds = appWidgetManager.getAppWidgetIds(ComponentName(this, CoffeeLogWidgetProvider::class.java))
+    if (appWidgetIds != null) {
+      for (appWidgetId in appWidgetIds) {
+        coffeeLogPreferences.deletePref(appWidgetId)
+      }
+    }
+
+    refreshTodayLabel()
+
+//동작 안함
+//    val appWidgetManager = AppWidgetManager.getInstance(this)
+//    //TODO ids
+//    val widgetIds = appWidgetManager.getAppWidgetIds(ComponentName(this, CoffeeLogWidgetProvider::class.java))
+//    if (widgetIds != null) {
+//      for (widgetId in widgetIds) {
+//        CoffeeLogWidgetProvider.updateAppWidget(this, appWidgetManager, widgetId)
+//      }
+//    }
 
   }
-
-
 
   fun refreshTodayLabel() {
     // Send a broadcast so that the Operating system updates the widget
@@ -107,11 +119,7 @@ class MainActivity : AppCompatActivity() {
 
     todayGramsOfCoffee = coffeeLogPreferences.loadTitlePref()
     gramsValue?.text = todayGramsOfCoffee.toString()
-
-
   }
-
-
 
   private fun saveCoffeeIntake(intake: Int) {
     val mySnackbar = Snackbar.make(findViewById<CoordinatorLayout>(R.id.main_coordinator), R.string.intake_saved, Snackbar.LENGTH_LONG)
@@ -122,7 +130,8 @@ class MainActivity : AppCompatActivity() {
 
   inner class SnackbarUndoListener(private val intake: Int) : View.OnClickListener {
     override fun onClick(v: View) {
-      coffeeLogPreferences.saveTitlePref(todayGramsOfCoffee - intake)
+      val originGrams = todayGramsOfCoffee - intake
+      coffeeLogPreferences.saveTitlePref(originGrams)
       refreshTodayLabel()
     }
   }
