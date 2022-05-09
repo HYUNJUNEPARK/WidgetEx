@@ -24,6 +24,24 @@
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/textView5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="24dp"
+        android:text="Limit : "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/limitConfigure"
+        android:text="0"
+        app:layout_constraintTop_toTopOf="@id/textView5"
+        app:layout_constraintStart_toEndOf="@id/textView5"
+        app:layout_constraintBottom_toBottomOf="@id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <LinearLayout
       android:id="@+id/linearLayout"
       android:layout_width="wrap_content"
@@ -108,6 +126,17 @@
           android:drawableStart="@drawable/ic_long_coffee"
           android:onClick="onLongPressed"
           android:text="@string/long_coffee" />
+
+        <Button
+            android:text="RESET"
+            android:onClick="resetTodayLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/add_coffee_background" />
 
 
       </LinearLayout>

@@ -40,64 +40,89 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
 import com.raywenderlich.android.coffeelogs.*
+import com.raywenderlich.android.coffeelogs.key.CoffeeTypes
+import com.raywenderlich.android.coffeelogs.key.Constants
+import com.raywenderlich.android.coffeelogs.preferences.CoffeeLogPreferences
+import com.raywenderlich.android.coffeelogs.widget.CoffeeLogWidgetProvider
 
 class MainActivity : AppCompatActivity() {
 
-  internal val coffeeLoggerPersistence = CoffeeLoggerPersistence(this)
-  private var today: Int = 0
+  internal val coffeeLogPreferences = CoffeeLogPreferences(this)
+  private var todayGramsOfCoffee: Int = 0
   private var gramsValue: TextView? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
+
     gramsValue = findViewById<TextView?>(R.id.grams)
     refreshTodayLabel()
+
+
+
     if (intent != null && intent.action == Constants.ADD_COFFEE_INTENT) {
       val coffeeIntake = intent.getIntExtra(Constants.GRAMS_EXTRA, 0)
-      coffeeLoggerPersistence.saveTitlePref(today + coffeeIntake)
+      coffeeLogPreferences.saveTitlePref(todayGramsOfCoffee + coffeeIntake)
       saveCoffeeIntake(coffeeIntake)
     }
+
+
+
+
   }
 
   fun onRistrettoPressed(v: View) {
-    coffeeLoggerPersistence.saveTitlePref(today + CoffeeTypes.RISTRETTO.grams)
+    coffeeLogPreferences.saveTitlePref(todayGramsOfCoffee + CoffeeTypes.RISTRETTO.grams)
     saveCoffeeIntake(CoffeeTypes.RISTRETTO.grams)
   }
 
   fun onEspressoPressed(v: View) {
-    coffeeLoggerPersistence.saveTitlePref(today + CoffeeTypes.ESPRESSO.grams)
+    coffeeLogPreferences.saveTitlePref(todayGramsOfCoffee + CoffeeTypes.ESPRESSO.grams)
     saveCoffeeIntake(CoffeeTypes.ESPRESSO.grams)
   }
 
   fun onLongPressed(v: View) {
-    coffeeLoggerPersistence.saveTitlePref(today + CoffeeTypes.LONG.grams)
+    coffeeLogPreferences.saveTitlePref(todayGramsOfCoffee + CoffeeTypes.LONG.grams)
     saveCoffeeIntake(CoffeeTypes.LONG.grams)
   }
 
-  fun refreshTodayLabel() {
-    // Send a broadcast so that the Operating system updates the widget
-    val man = AppWidgetManager.getInstance(this)
-    val ids = man.getAppWidgetIds(ComponentName(this, CoffeeLoggerWidget::class.java))
-    val updateIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
-    updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
-    sendBroadcast(updateIntent)
 
-    today = coffeeLoggerPersistence.loadTitlePref()
-    gramsValue?.text = today.toString()
+  fun resetTodayLabel(v: View) {
+
+
+    //coffeeLogPreferences.deletePref()
+
+
   }
 
+
+
+  fun refreshTodayLabel() {
+    // Send a broadcast so that the Operating system updates the widget
+    val manager = AppWidgetManager.getInstance(this)
+    val widgetIds = manager.getAppWidgetIds(ComponentName(this, CoffeeLogWidgetProvider::class.java))
+    val updateIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+    updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds)
+    sendBroadcast(updateIntent)
+
+    todayGramsOfCoffee = coffeeLogPreferences.loadTitlePref()
+    gramsValue?.text = todayGramsOfCoffee.toString()
+
+
+  }
+
+
+
   private fun saveCoffeeIntake(intake: Int) {
-    val mySnackbar = Snackbar.make(findViewById<CoordinatorLayout>(R.id.main_coordinator),
-      R.string.intake_saved, Snackbar.LENGTH_LONG)
+    val mySnackbar = Snackbar.make(findViewById<CoordinatorLayout>(R.id.main_coordinator), R.string.intake_saved, Snackbar.LENGTH_LONG)
     mySnackbar.setAction(R.string.undo_string, SnackbarUndoListener(intake))
     mySnackbar.show()
-
     refreshTodayLabel()
   }
 
   inner class SnackbarUndoListener(private val intake: Int) : View.OnClickListener {
     override fun onClick(v: View) {
-      coffeeLoggerPersistence.saveTitlePref(today - intake)
+      coffeeLogPreferences.saveTitlePref(todayGramsOfCoffee - intake)
       refreshTodayLabel()
     }
   }

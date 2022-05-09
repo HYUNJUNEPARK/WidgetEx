@@ -28,20 +28,18 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.coffeelogs
+package com.raywenderlich.android.coffeelogs.preferences
 
 import android.content.Context
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CoffeeLoggerPersistence(private val context: Context) {
-
+class CoffeeLogPreferences(private val context: Context) {
   companion object {
-    private const val PREFS_NAME = "com.raywenderlich.android.coffeelogs.CoffeeLoggerWidget"
+    private const val PREFS_NAME = "com.raywenderlich.android.coffeelogs.widget.CoffeeLoggerWidget"
     private const val PREF_PREFIX_KEY = "coffee_logger"
     private const val PREF_LIMIT_PREFIX = "coffee_limit_"
   }
-
   private val strFormatter = SimpleDateFormat("DDMMYYYY", Locale.US)
   
   // Write the prefix to the SharedPreferences object for this widget
@@ -64,6 +62,7 @@ class CoffeeLoggerPersistence(private val context: Context) {
     val prefs = context.getSharedPreferences(PREFS_NAME, 0)
     return prefs.getInt(PREF_LIMIT_PREFIX + widgetId, 0)
   }
+
 
   // Read the prefix from the SharedPreferences object for this widget.
   // If there is no preference saved, get the default from a resource

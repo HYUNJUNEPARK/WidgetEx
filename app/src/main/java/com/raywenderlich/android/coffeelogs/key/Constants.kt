@@ -28,7 +28,7 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.coffeelogs
+package com.raywenderlich.android.coffeelogs.key
 
 class Constants {
   companion object {
