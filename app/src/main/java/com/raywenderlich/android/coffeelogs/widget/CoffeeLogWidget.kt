@@ -1,6 +1,7 @@
 package com.raywenderlich.android.coffeelogs.widget
 
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
@@ -28,8 +29,6 @@ class CoffeeLogWidget : AppWidgetProvider() {
         setTextViewText(R.id.appwidget_text, widgetText)
         setTextViewText(R.id.coffee_quote, getRandomQuote(context))
         setTextViewText(R.id.limitTextView, coffeeLogPreferences.getLimitPref().toString())
-
-        //TODO MainActivity 오픈
         setOnClickPendingIntent(R.id.ristretto_button, getPendingIntent(context, CoffeeTypes.RISTRETTO.grams))
         setOnClickPendingIntent(R.id.espresso_button, getPendingIntent(context, CoffeeTypes.ESPRESSO.grams))
         setOnClickPendingIntent(R.id.long_button, getPendingIntent(context, CoffeeTypes.LONG.grams))
@@ -48,7 +47,7 @@ class CoffeeLogWidget : AppWidgetProvider() {
       val intent = Intent(context, MainActivity::class.java)
       intent.action = Constants.ADD_COFFEE_INTENT
       intent.putExtra(Constants.GRAMS_EXTRA, grams)
-      return PendingIntent.getActivity(context, grams, intent, 0)
+      return PendingIntent.getActivity(context, grams, intent, FLAG_UPDATE_CURRENT)
     }
 
     private fun getRandomQuote(context: Context): String {

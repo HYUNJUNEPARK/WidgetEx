@@ -6,7 +6,6 @@ import android.content.ComponentName
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import com.raywenderlich.android.coffeelogs.preferences.CoffeeLogPreferences
@@ -23,6 +22,7 @@ class CoffeeLogLimitActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coffee_logger_widget_configure)
 
+        //TODO xml에 넣기
         findViewById<View>(R.id.add_button).setOnClickListener(onClickListener)
         appWidgetText = findViewById(R.id.appwidget_text)
 
