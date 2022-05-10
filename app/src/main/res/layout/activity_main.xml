@@ -128,8 +128,8 @@
           android:text="@string/long_coffee" />
 
         <Button
-            android:text="RESET"
-            android:onClick="resetTodayLabel"
+            android:text="RESET TODAY COFFEE"
+            android:onClick="onResetTodayCoffeePressed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -137,7 +137,6 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/add_coffee_background" />
-
 
       </LinearLayout>
     </ScrollView>
