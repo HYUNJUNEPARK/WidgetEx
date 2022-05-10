@@ -37,45 +37,46 @@ import java.util.*
 class CoffeeLogPreferences(private val context: Context) {
   companion object {
     private const val PREFS_NAME = "com.raywenderlich.android.coffeelogs.widget.CoffeeLoggerWidget"
-    private const val PREF_PREFIX_KEY = "coffee_logger"
-    private const val PREF_LIMIT_PREFIX = "coffee_limit_"
+    private const val PREF_TODAY_TOTAL_COFFEE_KEY = "today_coffee_logger_"
+    private const val PREF_LIMIT_KEY = "coffee_limit_"
   }
-  private val strFormatter = SimpleDateFormat("DDMMYYYY", Locale.US)
-  
+  private val strFormatter = SimpleDateFormat("yyyyMMdd")
+
+
   // Write the prefix to the SharedPreferences object for this widget
-  internal fun saveTitlePref(value: Int) {
+  internal fun saveTodayCoffeePref(value: Int) {
     val date = Date()
     val prefs = context.getSharedPreferences(PREFS_NAME, 0).edit()
-    prefs.putInt(PREF_PREFIX_KEY + strFormatter.format(date), value)
+    prefs.putInt(PREF_TODAY_TOTAL_COFFEE_KEY + strFormatter.format(date), value)
     prefs.apply()
   }
 
   // Read the prefix from the SharedPreferences object for this widget.
   // If there is no preference saved, get the default from a resource
-  internal fun loadTitlePref(): Int {
+  internal fun getTodayCoffeePref(): Int {
     val date = Date()
     val prefs = context.getSharedPreferences(PREFS_NAME, 0)
-    return prefs.getInt(PREF_PREFIX_KEY + strFormatter.format(date), 0)
+    return prefs.getInt(PREF_TODAY_TOTAL_COFFEE_KEY + strFormatter.format(date), /*default*/0)
   }
 
   // Write the prefix to the SharedPreferences object for this widget
   internal fun saveLimitPref(value: Int, widgetId: Int) {
     val prefs = context.getSharedPreferences(PREFS_NAME, 0).edit()
-    prefs.putInt(PREF_LIMIT_PREFIX + widgetId, value)
+    prefs.putInt(PREF_LIMIT_KEY + widgetId, value)
     prefs.apply()
   }
 
   // Write the prefix to the SharedPreferences object for this widget
   internal fun getLimitPref(widgetId: Int): Int {
     val prefs = context.getSharedPreferences(PREFS_NAME, 0)
-    return prefs.getInt(PREF_LIMIT_PREFIX + widgetId, 0)
+    return prefs.getInt(PREF_LIMIT_KEY + widgetId, 0)
   }
 
   internal fun deletePref(widgetId: Int) {
     val date = Date()
     val prefs = context.getSharedPreferences(PREFS_NAME, 0).edit()
-    prefs.remove(PREF_PREFIX_KEY + strFormatter.format(date))
-    prefs.remove(PREF_LIMIT_PREFIX + widgetId)
+    prefs.remove(PREF_TODAY_TOTAL_COFFEE_KEY + strFormatter.format(date))
+    prefs.remove(PREF_LIMIT_KEY + widgetId)
     prefs.apply()
   }
 }

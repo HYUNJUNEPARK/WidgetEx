@@ -4,7 +4,7 @@ import android.app.Service
 import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.os.IBinder
-import com.raywenderlich.android.coffeelogs.widget.CoffeeLogWidgetProvider
+import com.raywenderlich.android.coffeelogs.widget.CoffeeLogWidget
 
 class CoffeeQuotesService : Service() {
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -13,7 +13,7 @@ class CoffeeQuotesService : Service() {
 
     if (allWidgetIds != null) {
       for (appWidgetId in allWidgetIds) {
-        CoffeeLogWidgetProvider.updateAppWidget(this, appWidgetManager, appWidgetId)
+        CoffeeLogWidget.updateAppWidget(this, appWidgetManager, appWidgetId)
       }
     }
     return super.onStartCommand(intent, flags, startId)

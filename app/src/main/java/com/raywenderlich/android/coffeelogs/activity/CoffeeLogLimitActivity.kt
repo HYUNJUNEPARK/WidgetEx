@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import com.raywenderlich.android.coffeelogs.preferences.CoffeeLogPreferences
-import com.raywenderlich.android.coffeelogs.widget.CoffeeLogWidgetProvider
+import com.raywenderlich.android.coffeelogs.widget.CoffeeLogWidget
 import com.raywenderlich.android.coffeelogs.R
 
 class CoffeeLogLimitActivity : AppCompatActivity() {
@@ -45,6 +45,6 @@ class CoffeeLogLimitActivity : AppCompatActivity() {
 
   private fun updateWidget() {
     val appWidgetManager = AppWidgetManager.getInstance(this)
-    CoffeeLogWidgetProvider.updateAppWidget(this, appWidgetManager, appWidgetId)
+    CoffeeLogWidget.updateAppWidget(this, appWidgetManager, appWidgetId)
   }
 }

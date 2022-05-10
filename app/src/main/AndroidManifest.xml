@@ -17,7 +17,7 @@
       </intent-filter>
     </activity>
 
-    <receiver android:name=".widget.CoffeeLogWidgetProvider">
+    <receiver android:name=".widget.CoffeeLogWidget">
       <intent-filter>
         <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
       </intent-filter>
@@ -32,8 +32,7 @@
       android:exported="true">
     </service>
 
-    <activity android:name=".activity.CoffeeLogLimitActivity">
-    </activity>
+    <activity android:name=".activity.CoffeeLogLimitActivity"/>
 
   </application>
 
