@@ -4,6 +4,11 @@ import android.app.Service
 import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.os.IBinder
+import android.util.Log
+import com.raywenderlich.android.coffeelogs.activity.MainActivity
+import com.raywenderlich.android.coffeelogs.key.CoffeeTypes
+import com.raywenderlich.android.coffeelogs.key.Constants.Companion.TAG
+import com.raywenderlich.android.coffeelogs.preferences.CoffeeLogPreferences
 import com.raywenderlich.android.coffeelogs.widget.CoffeeLogWidget
 
 class CoffeeQuotesService : Service() {
