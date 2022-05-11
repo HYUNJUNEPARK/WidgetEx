@@ -19,15 +19,21 @@ import com.raywenderlich.android.coffeelogs.service.TodayCoffeeService
  * Implementation of App Widget functionality.
  */
 class CoffeeLogWidget : AppWidgetProvider() {
+  override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+    val intent = Intent(context.applicationContext, CoffeeQuotesService::class.java)
+    intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds)
+    context.startService(intent)
+  }
+
   companion object {
     internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
       val coffeeLogPreferences = CoffeeLogPreferences(context)
-      val widgetText = coffeeLogPreferences.getTodayCoffeePref().toString()
+      val todayCoffee = coffeeLogPreferences.getTodayCoffeePref().toString()
 
       // Construct the RemoteViews object
       val views = RemoteViews(context.packageName, R.layout.coffee_logger_widget)
       views.run {
-        setTextViewText(R.id.appwidget_text, widgetText)
+        setTextViewText(R.id.appwidget_text, todayCoffee)
         setTextViewText(R.id.coffee_quote, getRandomQuote(context))
         setTextViewText(R.id.limitTextView, coffeeLogPreferences.getLimitPref().toString())
         //activity
@@ -42,7 +48,7 @@ class CoffeeLogWidget : AppWidgetProvider() {
 
       //update widget color by limit
       val limitCoffee: Int = coffeeLogPreferences.getLimitPref()
-      val backgroundColor = if (limitCoffee < widgetText.toInt()) R.drawable.background_overlimit else R.drawable.background
+      val backgroundColor = if (limitCoffee < todayCoffee.toInt()) R.drawable.background_overlimit else R.drawable.background
       views.setInt(R.id.widget_layout, "setBackgroundResource", backgroundColor)
 
       // Instruct the widget manager to update the widget
@@ -60,9 +66,6 @@ class CoffeeLogWidget : AppWidgetProvider() {
       val intent = Intent(context, TodayCoffeeService::class.java)
       intent.action = Constants.ADD_COFFEE_INTENT
       intent.putExtra(Constants.GRAMS_EXTRA, grams)
-
-      //TODO WIdgetID Setting
-
       return PendingIntent.getService(context, grams, intent, FLAG_UPDATE_CURRENT)
     }
 
@@ -71,31 +74,6 @@ class CoffeeLogWidget : AppWidgetProvider() {
       val rand = Math.random() * quotes.size
       return quotes[rand.toInt()].toString()
     }
-  }
-
-  //위젯 갱신 주기에 따라 위젯을 갱신할때 호출
-  override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-    val intent = Intent(context.applicationContext, CoffeeQuotesService::class.java)
-    intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds)
-    context.startService(intent)
-  }
-
-  override fun onReceive(context: Context?, intent: Intent?) {
-    super.onReceive(context, intent)
-  }
-
-  //위젯이 처음 생성될때 호출되며, 동일한 위젯의 경우 처음 호출
-  override fun onEnabled(context: Context) {
-  }
-
-  //위젯의 마지막 인스턴스가 제거될때 호출
-  override fun onDisabled(context: Context?) {
-    super.onDisabled(context)
-  }
-
-  //위젯이 사용자에 의해 제거될때 호출
-  override fun onDeleted(context: Context?, appWidgetIds: IntArray?) {
-    super.onDeleted(context, appWidgetIds)
   }
 }
 

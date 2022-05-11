@@ -12,7 +12,7 @@
         <service
             android:name=".service.TodayCoffeeService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true"/>
 
         <activity android:name=".activity.MainActivity">
             <intent-filter>
@@ -35,9 +35,9 @@
         <service
             android:name=".service.CoffeeQuotesService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true"/>
 
-        <activity android:name=".activity.CoffeeLogLimitActivity" />
+        <activity android:name=".activity.LimitSettingActivity" />
     </application>
 
 </manifest>

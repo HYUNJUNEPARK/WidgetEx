@@ -14,18 +14,22 @@ import com.raywenderlich.android.coffeelogs.widget.CoffeeLogWidget
 class TodayCoffeeService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent != null && intent.action == Constants.ADD_COFFEE_INTENT) {
-            val coffeeLogPreferences = CoffeeLogPreferences(this)
 
+            val coffeeLogPreferences = CoffeeLogPreferences(this)
             val todayCoffee = coffeeLogPreferences.getTodayCoffeePref()
             val coffeeIntake = intent.getIntExtra(Constants.GRAMS_EXTRA, 0)
             val totalCoffee = todayCoffee + coffeeIntake
             coffeeLogPreferences.saveTodayCoffeePref(totalCoffee)
+
 
             val appWidgetManager = AppWidgetManager.getInstance(this)
             val appWidgetIds = appWidgetManager.getAppWidgetIds(ComponentName(this, CoffeeLogWidget::class.java))
             for (appWidgetId in appWidgetIds) {
                 CoffeeLogWidget.updateAppWidget(this, appWidgetManager, appWidgetId)
             }
+
+
+
         }
         return super.onStartCommand(intent, flags, startId)
     }

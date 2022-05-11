@@ -42,7 +42,6 @@ class CoffeeLogPreferences(private val context: Context) {
   }
   private val strFormatter = SimpleDateFormat("yyyyMMdd")
 
-
   // Write the prefix to the SharedPreferences object for this widget
   internal fun saveTodayCoffeePref(value: Int) {
     val date = Date()
