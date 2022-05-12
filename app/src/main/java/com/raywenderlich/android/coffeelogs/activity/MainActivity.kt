@@ -37,6 +37,7 @@ import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import com.raywenderlich.android.coffeelogs.*
@@ -60,6 +61,7 @@ class MainActivity : AppCompatActivity() {
 
     resetTodayCoffee()
     initLimitCoffee()
+
 
     if (intent != null && intent.action == Constants.ADD_COFFEE_INTENT) {
       val coffeeIntake = intent.getIntExtra(Constants.GRAMS_EXTRA, 0)

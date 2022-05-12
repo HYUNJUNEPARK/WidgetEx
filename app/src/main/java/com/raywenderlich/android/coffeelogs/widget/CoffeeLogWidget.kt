@@ -38,6 +38,7 @@ class CoffeeLogWidget : AppWidgetProvider() {
         setTextViewText(R.id.coffee_quote, getRandomQuote(context))
         setTextViewText(R.id.limitTextView, coffeeLogPreferences.getLimitPref().toString())
         //activity
+
         setOnClickPendingIntent(R.id.ristretto_button, getActivityPendingIntent(context, CoffeeTypes.RISTRETTO.grams))
         setOnClickPendingIntent(R.id.espresso_button, getActivityPendingIntent(context, CoffeeTypes.ESPRESSO.grams))
         setOnClickPendingIntent(R.id.long_button, getActivityPendingIntent(context, CoffeeTypes.LONG.grams))
@@ -68,7 +69,7 @@ class CoffeeLogWidget : AppWidgetProvider() {
       return PendingIntent.getActivity(context, grams, intent, FLAG_UPDATE_CURRENT)
     }
 
-//서비스에서 위젯이 보낸 인텐트를 처리하면 앱이 백그라운드에서 실행되고 있지 않을 때 동작하지 않음
+//    서비스에서 위젯이 보낸 인텐트를 처리하면 앱이 백그라운드에서 실행되고 있지 않을 때 동작하지 않음
 //    private fun getServicePendingIntent(context: Context, grams: Int): PendingIntent {
 //      val intent = Intent(context, TodayCoffeeService::class.java)
 //      intent.action = Constants.ADD_COFFEE_INTENT
@@ -81,6 +82,12 @@ class CoffeeLogWidget : AppWidgetProvider() {
       intent.action = Constants.ADD_COFFEE_INTENT
       intent.putExtra(Constants.GRAMS_EXTRA, grams)
       return getBroadcast(context, grams, intent, FLAG_UPDATE_CURRENT)
+    }
+
+    private fun getRefreshPendingIntent(context: Context): PendingIntent {
+      val intent = Intent(context, RefreshReceiver::class.java)
+      intent.action = Constants.REFRESH_INTENT
+      return getBroadcast(context, 0, intent, FLAG_UPDATE_CURRENT)
     }
 
     private fun getRandomQuote(context: Context): String {

@@ -9,7 +9,7 @@ import com.raywenderlich.android.coffeelogs.key.Constants
 import com.raywenderlich.android.coffeelogs.preferences.CoffeeLogPreferences
 import com.raywenderlich.android.coffeelogs.widget.CoffeeLogWidget
 
-class TodayCoffeeService : Service() {
+class TodayCoffeeService_NotUse : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent != null && intent.action == Constants.ADD_COFFEE_INTENT) {
             val coffeeLogPreferences = CoffeeLogPreferences(this)
