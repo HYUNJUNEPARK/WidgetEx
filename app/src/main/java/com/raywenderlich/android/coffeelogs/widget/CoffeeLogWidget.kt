@@ -2,6 +2,7 @@ package com.raywenderlich.android.coffeelogs.widget
 
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
+import android.app.PendingIntent.getBroadcast
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
@@ -13,7 +14,7 @@ import com.raywenderlich.android.coffeelogs.key.CoffeeTypes
 import com.raywenderlich.android.coffeelogs.key.Constants
 import com.raywenderlich.android.coffeelogs.preferences.CoffeeLogPreferences
 import com.raywenderlich.android.coffeelogs.service.CoffeeQuotesService
-import com.raywenderlich.android.coffeelogs.service.TodayCoffeeService
+
 
 /**
  * Implementation of App Widget functionality.
@@ -40,11 +41,16 @@ class CoffeeLogWidget : AppWidgetProvider() {
         setOnClickPendingIntent(R.id.ristretto_button, getActivityPendingIntent(context, CoffeeTypes.RISTRETTO.grams))
         setOnClickPendingIntent(R.id.espresso_button, getActivityPendingIntent(context, CoffeeTypes.ESPRESSO.grams))
         setOnClickPendingIntent(R.id.long_button, getActivityPendingIntent(context, CoffeeTypes.LONG.grams))
-        //service
-        setOnClickPendingIntent(R.id.ristretto_service_button, getServicePendingIntent(context, CoffeeTypes.RISTRETTO.grams))
-        setOnClickPendingIntent(R.id.espresso_service_button, getServicePendingIntent(context, CoffeeTypes.ESPRESSO.grams))
-        setOnClickPendingIntent(R.id.long_service_button, getServicePendingIntent(context, CoffeeTypes.LONG.grams))
+        //broadcast
+        setOnClickPendingIntent(R.id.ristretto_service_button, getBroadcastPendingIntent(context, CoffeeTypes.RISTRETTO.grams))
+        setOnClickPendingIntent(R.id.espresso_service_button, getBroadcastPendingIntent(context, CoffeeTypes.ESPRESSO.grams))
+        setOnClickPendingIntent(R.id.long_service_button, getBroadcastPendingIntent(context, CoffeeTypes.LONG.grams))
       }
+      //service
+//        setOnClickPendingIntent(R.id.ristretto_service_button, getServicePendingIntent(context, CoffeeTypes.RISTRETTO.grams))
+//        setOnClickPendingIntent(R.id.espresso_service_button, getServicePendingIntent(context, CoffeeTypes.ESPRESSO.grams))
+//        setOnClickPendingIntent(R.id.long_service_button, getServicePendingIntent(context, CoffeeTypes.LONG.grams))
+
 
       //update widget color by limit
       val limitCoffee: Int = coffeeLogPreferences.getLimitPref()
@@ -62,11 +68,19 @@ class CoffeeLogWidget : AppWidgetProvider() {
       return PendingIntent.getActivity(context, grams, intent, FLAG_UPDATE_CURRENT)
     }
 
-    private fun getServicePendingIntent(context: Context, grams: Int): PendingIntent {
-      val intent = Intent(context, TodayCoffeeService::class.java)
+//서비스에서 위젯이 보낸 인텐트를 처리하면 앱이 백그라운드에서 실행되고 있지 않을 때 동작하지 않음
+//    private fun getServicePendingIntent(context: Context, grams: Int): PendingIntent {
+//      val intent = Intent(context, TodayCoffeeService::class.java)
+//      intent.action = Constants.ADD_COFFEE_INTENT
+//      intent.putExtra(Constants.GRAMS_EXTRA, grams)
+//      return PendingIntent.getService(context, grams, intent, FLAG_UPDATE_CURRENT)
+//    }
+
+    private fun getBroadcastPendingIntent(context: Context, grams: Int): PendingIntent {
+      val intent = Intent(context, CoffeeLogReceiver::class.java)
       intent.action = Constants.ADD_COFFEE_INTENT
       intent.putExtra(Constants.GRAMS_EXTRA, grams)
-      return PendingIntent.getService(context, grams, intent, FLAG_UPDATE_CURRENT)
+      return getBroadcast(context, grams, intent, FLAG_UPDATE_CURRENT)
     }
 
     private fun getRandomQuote(context: Context): String {

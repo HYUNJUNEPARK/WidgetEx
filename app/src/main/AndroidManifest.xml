@@ -9,10 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service
-            android:name=".service.TodayCoffeeService"
+        <receiver
+            android:name=".widget.CoffeeLogReceiver"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true"></receiver>
+
+<!--        <service-->
+<!--            android:name=".service.TodayCoffeeService"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="true" />-->
 
         <activity android:name=".activity.MainActivity">
             <intent-filter>
@@ -35,7 +40,7 @@
         <service
             android:name=".service.CoffeeQuotesService"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
 
         <activity android:name=".activity.LimitSettingActivity" />
     </application>
