@@ -3,26 +3,29 @@
 <img src="https://github.com/HYUNJUNEPARK/ImageRepository/blob/master/androidProgramming/coffeeLogWidget1.png" height="400"/>
 <img src="https://github.com/HYUNJUNEPARK/ImageRepository/blob/master/androidProgramming/coffeeLogWidget2.png" height="400"/>
 
----
+
 1. <a href = "#content1">위젯 생성</a></br>
 -AppWidgetProvider</br>
 -onUpdate/onEnabled/onDeleted/onDisabled/updateAppWidget/onReceive</br>
 -layout</br>
 -xml</br>
-
 2. <a href = "#content2">위젯 설정 액티비티</a></br>
-3. <a href = "#content3">content3</a></br>
+3. <a href = "#content3">디바이스 부팅 시 위젯 활성화</a></br>
+4. <a href = "#content4">SharedPreferences</a></br>
+5. <a href = "#content5">PendingIntent</a></br>
 * <a href = "#ref">참고링크</a>
 ---
 
 Original Project : https://www.raywenderlich.com/33-android-app-widgets-tutorial</br>
-변경사항</br>
+개선사항</br>
 a 위젯 UI limit 표기</br>
 b Today Coffee Reset 기능 추가</br>
 c 다중 위젯을 모두 동기화</br>
 d 위젯에서 백그라운드에서 앱이 없어도 동작 가능</br>
 e 재부팅 후 위젯 로드 안되던 문제 해결</br>
 <br></br>
+<br></br>
+
 
 ><a id = "content1">**1. 위젯 생성**</a></br>
 
@@ -101,6 +104,7 @@ if (extras != null) {
 //2. 설정 액티비티 내에서 위젯 관련 설정이 진행되고 완료되면 위젯을 업데이트
 val appWidgetManager = AppWidgetManager.getInstance(this)
 val appWidgetIds = appWidgetManager.getAppWidgetIds(ComponentName(this, CoffeeLogWidget::class.java))
+//홈스크린 모든 위젯을 동기화 해주기 위해 반복문 사용
 for(appWidgetId in appWidgetIds) {
     CoffeeLogWidget.updateAppWidget(this, appWidgetManager, appWidgetId)
 }
@@ -118,9 +122,98 @@ finish()
 <br></br>
 <br></br>
 
-><a id = "content3">**3. content3**</a></br>
+><a id = "content3">**3. 디바이스 부팅 시 위젯 활성화**</a></br>
 
 
+```
+//AndroidManifest
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+//...
+
+<receiver
+    android:name=".widget.RefreshReceiver"
+    android:enabled="true"
+    android:exported="true">
+    <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED"/>
+    </intent-filter>
+</receiver>
+
+//RefreshReceiver
+if (intent != null && intent.action == "android.intent.action.BOOT_COMPLETED") {
+    //...
+}
+```
+<br></br>
+<br></br>
+
+
+><a id = "content4">**4. SharedPreferences**</a></br>
+
+```kotlin
+private val strFormatter = SimpleDateFormat("yyyyMMdd")
+
+//value 저장하기 :
+internal fun saveTodayCoffeePref(value: Int) {
+  val date = Date()
+  val prefs = context.getSharedPreferences(PREFS_NAME, /*default*/0).edit()
+  prefs.putInt(PREF_TODAY_TOTAL_COFFEE_KEY + strFormatter.format(date), value)
+  prefs.apply()
+}
+
+//value 꺼내기
+internal fun getTodayCoffeePref(): Int {
+  val date = Date()
+  val prefs = context.getSharedPreferences(PREFS_NAME, 0)
+  return prefs.getInt(PREF_TODAY_TOTAL_COFFEE_KEY + strFormatter.format(date), /*default*/0)
+}
+
+//sharedPreferences 저장된 결과
+<map>
+    <int name="today_coffee_logger_20220513" value="30" />
+    <int name="today_coffee_logger_20220512" value="73" />
+    <int name="coffee_limit" value="500" />
+</map>
+```
+<br></br>
+<br></br>
+
+><a id = "content5">**5. PendingIntent**</a></br>
+
+-갖고 있는 인텐트를 당장 수행하지 않고 특정 시점(앱이 구동되고 있지 않을 때)에서 수행</br>
+
+**사용 사례**</br>
+(a) Notification (푸시알림) 으로 Intent 작업 수행시 사용</br>
+(b) 바탕화면 (런쳐) 위젯에서 Intent 작업 수행 시 사용</br>
+(c) AlarmManager 를 통해 지정된 시간에 Intent 작업 수행시 사용</br>
+-> 다른 앱이 프로세스를 점유하고 있을 때 실행된다는 점이 공통점이 있음</br>
+
+**컴포넌트의 유형에 따라 생성자를 호출하는 방식이 다름**
+`PendingIntent.getActivity(Context, requestCode, Intent, FLAG)`</br>
+`PendingIntent.getService(Context, requestCode, Intent, FLAG)`</br>
+`PendingIntent.getBroadcast(Context, requestCode, Intent, FLAG)`</br>
+
+**플래그**</br>
+FLAG_CANCEL_CURRENT : 이전에 생성한 PendingIntent 취소 후 새로 생성</br>
+FLAG_NO_CREATE : 이미 생성된 PendingIntent 가 있다면 재사용 (없으면 Null 리턴)</br>
+FLAG_ONE_SHOT : 해당 PendingIntent 를 일회성으로 사용</br>
+FLAG_UPDATE_CURRENT : 이미 생성된 PendingIntent 가 있다면, Extra Data 만 갈아끼움 (업데이트)</br>
+
+```kotlin
+//PendingIntent
+fun getBroadcastPendingIntent(context: Context, grams: Int): PendingIntent {
+    val intent = Intent(context, CoffeeLogReceiver::class.java)
+    intent.action = Constants.ADD_COFFEE_INTENT
+    intent.putExtra(Constants.GRAMS_EXTRA, grams)
+    return PendingIntent.getBroadcast(context, grams, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+}
+
+//BroadcastReceiver
+if (intent != null && intent.action == Constants.ADD_COFFEE_INTENT) {
+    //...
+}
+```
 
 <br></br>
 <br></br>
@@ -128,49 +221,18 @@ finish()
 
 ><a id = "ref">**참고링크**</a></br>
 
-링크설명</br>
-링크주소</br>
 
+error: resource android:dimen/system_app_widget_internal_padding not found</br>
+https://stackoverflow.com/questions/69739337/error-resource-androiddimen-system-app-widget-internal-padding-not-found</br>
 
-////
+AppWidgetProvider[BroadcastReceiver] 콜백 함수</br>
+https://arabiannight.tistory.com/239</br>
 
+앱 위젯의 설정 액티비티 만들기</br>
+https://android-kr.tistory.com/46</br>
 
-2. sharedPreferences
-2. 펜딩 인텐트
-3. 펜딩 인텐트 액티비티
-4. 팬딩 인텐트 서비스
+Restore widget state immediately after boot</br>
+https://stackoverflow.com/questions/20577818/restore-widget-state-immediately-after-boot</br>
 
-
-
-1. UI
-`<TextView style="@style/WidgetButtonVerticalSpace" />`
-`<TextView style="@style/WidgetButtonHorizontalSpace" />`
-
-2. SharedPreferences
-```kotlin
-
-
-
-
-```
-////
-
-
-
-
-
-/////
-error: resource android:dimen/system_app_widget_internal_padding not found
-https://stackoverflow.com/questions/69739337/error-resource-androiddimen-system-app-widget-internal-padding-not-found
-
-AppWidgetProvider[BroadcastReceiver] 콜백 함수
-https://arabiannight.tistory.com/239
-
-앱 위젯의 설정 액티비티 만들기
-https://android-kr.tistory.com/46
-
-Restore widget state immediately after boot
-https://stackoverflow.com/questions/20577818/restore-widget-state-immediately-after-boot
-
-Android - ACTION_BOOT_COMPLETED 이벤트 받기
-https://codechacha.com/ko/android-action-boot-completed/
+Android - ACTION_BOOT_COMPLETED 이벤트 받기</br>
+https://codechacha.com/ko/android-action-boot-completed/</br>

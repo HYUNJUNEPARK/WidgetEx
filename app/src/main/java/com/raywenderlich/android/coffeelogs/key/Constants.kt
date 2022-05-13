@@ -34,6 +34,10 @@ class Constants {
   companion object {
     const val GRAMS_EXTRA = "COFFEE_GRAMS"
     const val ADD_COFFEE_INTENT = "ADD_COFFEE"
+    //Preferences
     const val REFRESH_INTENT = "REFRESH_WIDGET"
+    const val PREFS_NAME = "com.raywenderlich.android.coffeelogs.widget.CoffeeLoggerWidget"
+    const val PREF_TODAY_TOTAL_COFFEE_KEY = "today_coffee_logger_"
+    const val PREF_LIMIT_KEY = "coffee_limit"
   }
 }

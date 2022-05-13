@@ -31,15 +31,13 @@
 package com.raywenderlich.android.coffeelogs.preferences
 
 import android.content.Context
+import com.raywenderlich.android.coffeelogs.key.Constants.Companion.PREFS_NAME
+import com.raywenderlich.android.coffeelogs.key.Constants.Companion.PREF_LIMIT_KEY
+import com.raywenderlich.android.coffeelogs.key.Constants.Companion.PREF_TODAY_TOTAL_COFFEE_KEY
 import java.text.SimpleDateFormat
 import java.util.*
 
 class CoffeeLogPreferences(private val context: Context) {
-  companion object {
-    private const val PREFS_NAME = "com.raywenderlich.android.coffeelogs.widget.CoffeeLoggerWidget"
-    private const val PREF_TODAY_TOTAL_COFFEE_KEY = "today_coffee_logger_"
-    private const val PREF_LIMIT_KEY = "coffee_limit"
-  }
   private val strFormatter = SimpleDateFormat("yyyyMMdd")
 
   // Write the prefix to the SharedPreferences object for this widget
@@ -62,7 +60,6 @@ class CoffeeLogPreferences(private val context: Context) {
   internal fun saveLimitPref(value: Int) {
     val prefs = context.getSharedPreferences(PREFS_NAME, 0).edit()
     prefs.putInt(PREF_LIMIT_KEY, value)
-    //prefs.putInt(PREF_LIMIT_KEY + widgetId, value)
     prefs.apply()
   }
 
