@@ -3,19 +3,26 @@ package com.raywenderlich.android.coffeelogs.service
 import android.app.Service
 import android.appwidget.AppWidgetManager
 import android.content.Intent
+import android.os.Build
 import android.os.IBinder
+import com.raywenderlich.android.coffeelogs.key.Constants
+import com.raywenderlich.android.coffeelogs.key.Constants.Companion.LOAD_QUOTE_INTENT
 import com.raywenderlich.android.coffeelogs.widget.CoffeeLogWidget
 
 class CoffeeQuotesService : Service() {
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-    val appWidgetManager = AppWidgetManager.getInstance(this)
-    val allWidgetIds = intent?.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS)
 
-    if (allWidgetIds != null) {
-      for (appWidgetId in allWidgetIds) {
-        CoffeeLogWidget.updateAppWidget(this, appWidgetManager, appWidgetId)
-      }
+    //updateWidget()
+    val updateWidgetIntent = Intent(this, UpdateWidgetService::class.java)
+    updateWidgetIntent.action = LOAD_QUOTE_INTENT
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      this.startForegroundService(updateWidgetIntent)
     }
+    else {
+      this.startService(updateWidgetIntent)
+    }
+
     return super.onStartCommand(intent, flags, startId)
   }
 

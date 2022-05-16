@@ -236,3 +236,7 @@ https://stackoverflow.com/questions/20577818/restore-widget-state-immediately-af
 
 Android - ACTION_BOOT_COMPLETED 이벤트 받기</br>
 https://codechacha.com/ko/android-action-boot-completed/</br>
+
+Android - Start service on boot</br>
+https://stackoverflow.com/questions/7690350/android-start-service-on-boot</br>
+

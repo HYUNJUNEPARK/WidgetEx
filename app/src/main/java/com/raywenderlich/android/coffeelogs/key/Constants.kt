@@ -32,8 +32,12 @@ package com.raywenderlich.android.coffeelogs.key
 
 class Constants {
   companion object {
+    const val TAG = "testLog"
+
     const val GRAMS_EXTRA = "COFFEE_GRAMS"
     const val ADD_COFFEE_INTENT = "ADD_COFFEE"
+    const val SET_LIMIT_INTENT = "LIMIT_COFFEE"
+    const val LOAD_QUOTE_INTENT = "LOAD_QUOTE"
     //Preferences
     const val REFRESH_INTENT = "REFRESH_WIDGET"
     const val PREFS_NAME = "com.raywenderlich.android.coffeelogs.widget.CoffeeLoggerWidget"
