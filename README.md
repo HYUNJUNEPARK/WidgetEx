@@ -13,6 +13,7 @@
 3. <a href = "#content3">디바이스 부팅 시 위젯 활성화</a></br>
 4. <a href = "#content4">SharedPreferences</a></br>
 5. <a href = "#content5">PendingIntent</a></br>
+6. <a href = "#content6">브로드캐스트 리시버 -> 서비스</a></br>
 * <a href = "#ref">참고링크</a>
 ---
 
@@ -21,7 +22,7 @@ Original Project : https://www.raywenderlich.com/33-android-app-widgets-tutorial
 a 위젯 UI limit 표기</br>
 b Today Coffee Reset 기능 추가</br>
 c 다중 위젯을 모두 동기화</br>
-d 위젯에서 백그라운드에서 앱이 없어도 동작 가능</br>
+d 위젯에서 백그라운드에서 앱이 없어도 동작 가능(BroadcastReceiver -> Service)</br>
 e 재부팅 후 위젯 로드 안되던 문제 해결</br>
 <br></br>
 <br></br>
@@ -214,6 +215,55 @@ if (intent != null && intent.action == Constants.ADD_COFFEE_INTENT) {
     //...
 }
 ```
+
+<br></br>
+<br></br>
+
+><a id = "content6">**6. 브로드캐스트 리시버 -> 서비스 **</a></br>
+
+
+-백그라운드에 앱이 실행중이지 않을 때 위젯 이벤트가 발생한다면 BroadcastReceiver 가 이벤트를 받아 Foreground service 를 활성화 시켜 이벤트를 처리하고  UI 를 업데이트</br>
+-Android O(API 26)부터 Background Service 실행이 제한되어 Foreground service 를 실행시켜야함</br>
+-`startForegroundService()` 으로 서비스가 실행되면, 실행된 서비스는 5초 내에 `startForeground()` 를 호출하여 서비스가 실행 중이라는 Notificaiton 을 등록해야 함.(그렇지 않다면 시스템이 서비스 강제 종료)</br>
+-sharedPreferences 와 UI 를 서비스에서 처리하는 동안 알람이 뜨는데 투명아이콘을 사용해 최대한 눈속임(?) 으로 서비스에서 데이터를 처리함</br>
+
+```kotlin
+
+//startForegroundService
+val updateWidgetIntent = Intent(this, UpdateWidgetService::class.java)
+updateWidgetIntent.action = SET_LIMIT_INTENT
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+    this.startForegroundService(updateWidgetIntent)
+}
+else {
+    this.startService(updateWidgetIntent)
+}
+
+//startForeground
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+    createNotificationChannel()
+    val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+        .setContentTitle("")
+        .setContentText("")
+        .setSmallIcon(R.drawable.transparent_icon)
+        .build()
+    startForeground(NOTIFICATION_ID, notification)
+}
+
+private fun createNotificationChannel() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val serviceChannel = NotificationChannel(
+            CHANNEL_ID,
+            CHANNEL_NAME,
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+        val manager = getSystemService(NotificationManager::class.java)
+        manager.createNotificationChannel(serviceChannel)
+    }
+}
+
+```
+
 
 <br></br>
 <br></br>

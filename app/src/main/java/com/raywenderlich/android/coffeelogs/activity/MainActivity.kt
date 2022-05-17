@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
-    gramsValue = findViewById<TextView?>(R.id.grams)
+    gramsValue = findViewById(R.id.grams)
     limitCoffeeTextView = findViewById(R.id.limitConfigure)
 
     resetTodayCoffee()
@@ -69,11 +69,25 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
+  //init UI
   private fun initLimitCoffee() {
     val limitCoffee = coffeeLogPreferences.getLimitPref()
     limitCoffeeTextView?.text = limitCoffee.toString()
   }
 
+  private fun resetTodayCoffee() {
+    // Send a broadcast so that the Operating system updates the widget
+    val appWidgetManager = AppWidgetManager.getInstance(this)
+    val appWidgetIds = appWidgetManager.getAppWidgetIds(ComponentName(this, CoffeeLogWidget::class.java))
+    val updateIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+    updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds)
+    sendBroadcast(updateIntent)
+
+    todayCoffee = coffeeLogPreferences.getTodayCoffeePref()
+    gramsValue?.text = todayCoffee.toString()
+  }
+
+  //Buttons
   fun onRistrettoPressed(v: View) {
     coffeeLogPreferences.saveTodayCoffeePref(todayCoffee + CoffeeTypes.RISTRETTO.grams)
     saveCoffeeIntakeSnackbar(CoffeeTypes.RISTRETTO.grams)
@@ -94,26 +108,15 @@ class MainActivity : AppCompatActivity() {
     resetTodayCoffee()
   }
 
-  fun resetTodayCoffee() {
-    // Send a broadcast so that the Operating system updates the widget
-    val appWidgetManager = AppWidgetManager.getInstance(this)
-    val appWidgetIds = appWidgetManager.getAppWidgetIds(ComponentName(this, CoffeeLogWidget::class.java))
-    val updateIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
-    updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds)
-    sendBroadcast(updateIntent)
-
-    todayCoffee = coffeeLogPreferences.getTodayCoffeePref()
-    gramsValue?.text = todayCoffee.toString()
-  }
-
+  //SnackBar
   private fun saveCoffeeIntakeSnackbar(intake: Int) {
     val mySnackbar = Snackbar.make(findViewById<CoordinatorLayout>(R.id.main_coordinator), R.string.intake_saved, Snackbar.LENGTH_LONG)
-    mySnackbar.setAction(R.string.undo_string, SnackbarUndoListener(intake))
+    mySnackbar.setAction(R.string.undo_string, SnackBarRollBackListener(intake))
     mySnackbar.show()
     resetTodayCoffee()
   }
 
-  inner class SnackbarUndoListener(private val intake: Int) : View.OnClickListener {
+  inner class SnackBarRollBackListener(private val intake: Int) : View.OnClickListener {
     override fun onClick(v: View) {
       val originGrams = todayCoffee - intake
       coffeeLogPreferences.saveTodayCoffeePref(originGrams)

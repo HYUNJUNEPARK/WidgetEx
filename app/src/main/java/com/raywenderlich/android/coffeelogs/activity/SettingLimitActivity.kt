@@ -13,7 +13,7 @@ import com.raywenderlich.android.coffeelogs.R
 import com.raywenderlich.android.coffeelogs.constant.Constants.Companion.SET_LIMIT_INTENT
 import com.raywenderlich.android.coffeelogs.service.UpdateWidgetService
 
-class LimitSettingActivity : AppCompatActivity() {
+class SettingLimitActivity : AppCompatActivity() {
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     private val coffeeLogPreferences = CoffeeLogPreferences(this)
 

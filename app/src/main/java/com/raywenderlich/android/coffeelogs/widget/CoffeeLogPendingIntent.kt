@@ -3,7 +3,6 @@ package com.raywenderlich.android.coffeelogs.widget
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import com.raywenderlich.android.coffeelogs.R
 import com.raywenderlich.android.coffeelogs.activity.MainActivity
 import com.raywenderlich.android.coffeelogs.constant.Constants
 import com.raywenderlich.android.coffeelogs.receiver.CoffeeLogReceiver
@@ -36,10 +35,4 @@ class CoffeeLogPendingIntent {
 //        intent.action = Constants.REFRESH_INTENT
 //        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 //    }
-
-    fun getRandomQuote(context: Context): String {
-        val quotes = context.resources.getStringArray(R.array.coffee_texts)
-        val rand = Math.random() * quotes.size
-        return quotes[rand.toInt()].toString()
-    }
 }

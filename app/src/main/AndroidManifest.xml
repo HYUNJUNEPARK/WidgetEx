@@ -55,7 +55,7 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activity.LimitSettingActivity" />
+        <activity android:name=".activity.SettingLimitActivity" />
     </application>
 
 </manifest>

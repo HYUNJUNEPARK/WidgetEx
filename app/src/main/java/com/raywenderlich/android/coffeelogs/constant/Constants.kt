@@ -50,5 +50,9 @@ class Constants {
     //foreground service
     const val CHANNEL_ID = "ForegroundChannel"
     const val CHANNEL_NAME = "Foreground"
+    const val NOTIFICATION_ID = 1
+
+    //widget
+    const val SET_BACKGROUND_RES = "setBackgroundResource"
   }
 }
