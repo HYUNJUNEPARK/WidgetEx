@@ -47,24 +47,9 @@
 
         <TextView style="@style/WidgetButtonHorizontalSpace" />
 
-        <LinearLayout
-            android:id="@+id/ristretto_button"
-            style="@style/WidgetBeverageButton">
-
-            <ImageView
-                style="@style/WidgetButtonImage"
-                android:src="@drawable/ic_ristretto" />
-
-            <TextView
-                style="@style/WidgetButtonText"
-                android:text="@string/ristretto_short" />
-
-        </LinearLayout>
-
-        <TextView style="@style/WidgetButtonHorizontalSpace" />
 
         <LinearLayout
-            android:id="@+id/espresso_button"
+            android:id="@+id/widget_add_button"
             style="@style/WidgetBeverageButton">
 
             <ImageView
@@ -73,93 +58,12 @@
 
             <TextView
                 style="@style/WidgetButtonText"
-                android:text="@string/espresso_short" />
+                android:text="ADD" />
 
         </LinearLayout>
 
         <TextView style="@style/WidgetButtonHorizontalSpace" />
-
-        <LinearLayout
-            android:id="@+id/long_button"
-            style="@style/WidgetBeverageButton">
-
-            <ImageView
-                style="@style/WidgetButtonImage"
-                android:src="@drawable/ic_long_coffee" />
-
-            <TextView
-                style="@style/WidgetButtonText"
-                android:text="@string/long_coffee_short" />
-
-        </LinearLayout>
-
-        <TextView style="@style/WidgetButtonHorizontalSpace" />
-
     </LinearLayout>
-
-<!--service-->
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView style="@style/WidgetButtonHorizontalSpace" />
-
-        <LinearLayout
-            android:id="@+id/ristretto_service_button"
-            style="@style/WidgetBeverageButton">
-
-            <ImageView
-                style="@style/WidgetButtonImage"
-                android:src="@drawable/ic_ristretto" />
-
-            <TextView
-                style="@style/WidgetButtonText"
-                android:text="@string/ristretto_short" />
-
-        </LinearLayout>
-
-        <TextView style="@style/WidgetButtonHorizontalSpace" />
-
-        <LinearLayout
-            android:id="@+id/espresso_service_button"
-            style="@style/WidgetBeverageButton">
-
-            <ImageView
-                style="@style/WidgetButtonImage"
-                android:src="@drawable/ic_espresso" />
-
-            <TextView
-                style="@style/WidgetButtonText"
-                android:text="@string/espresso_short" />
-
-        </LinearLayout>
-
-        <TextView style="@style/WidgetButtonHorizontalSpace" />
-
-        <LinearLayout
-            android:id="@+id/long_service_button"
-            style="@style/WidgetBeverageButton">
-
-            <ImageView
-                style="@style/WidgetButtonImage"
-                android:src="@drawable/ic_long_coffee" />
-
-            <TextView
-                style="@style/WidgetButtonText"
-                android:text="@string/long_coffee_short" />
-
-        </LinearLayout>
-
-        <TextView style="@style/WidgetButtonHorizontalSpace" />
-
-    </LinearLayout>
-
     <TextView style="@style/WidgetButtonVerticalSpace" />
-
-    <TextView
-        android:id="@+id/coffee_quote"
-        style="@style/WidgetQuote" />
 
 </LinearLayout>
