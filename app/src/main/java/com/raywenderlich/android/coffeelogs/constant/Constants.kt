@@ -43,6 +43,9 @@ class Constants {
     const val PREFS_NAME = "com.raywenderlich.android.coffeelogs.widget.CoffeeLoggerWidget"
     const val PREF_TODAY_TOTAL_COFFEE_KEY = "today_coffee_logger_"
     const val PREF_LIMIT_KEY = "coffee_limit"
+    const val BOOT_COMPLETED = "android.intent.action.BOOT_COMPLETED"
 
+    //widget
+    const val SET_BACKGROUND_RES = "setBackgroundResource"
   }
 }

@@ -68,11 +68,25 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
+  //init UI
   private fun initLimitCoffee() {
     val limitCoffee = coffeeLogPreferences.getLimitPref()
     limitCoffeeTextView?.text = limitCoffee.toString()
   }
 
+  fun resetTodayCoffee() {
+    // Send a broadcast so that the Operating system updates the widget
+    val appWidgetManager = AppWidgetManager.getInstance(this)
+    val appWidgetIds = appWidgetManager.getAppWidgetIds(ComponentName(this, CoffeeLogWidget::class.java))
+    val updateIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+    updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds)
+    sendBroadcast(updateIntent)
+
+    todayGramsOfCoffee = coffeeLogPreferences.getTodayCoffeePref()
+    gramsValue?.text = todayGramsOfCoffee.toString()
+  }
+
+  //Buttons
   fun onRistrettoPressed(v: View) {
     coffeeLogPreferences.saveTodayCoffeePref(todayGramsOfCoffee + CoffeeTypes.RISTRETTO.grams)
     saveCoffeeIntakeSnackbar(CoffeeTypes.RISTRETTO.grams)
@@ -93,18 +107,7 @@ class MainActivity : AppCompatActivity() {
     resetTodayCoffee()
   }
 
-  fun resetTodayCoffee() {
-    // Send a broadcast so that the Operating system updates the widget
-    val appWidgetManager = AppWidgetManager.getInstance(this)
-    val appWidgetIds = appWidgetManager.getAppWidgetIds(ComponentName(this, CoffeeLogWidget::class.java))
-    val updateIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
-    updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds)
-    sendBroadcast(updateIntent)
-
-    todayGramsOfCoffee = coffeeLogPreferences.getTodayCoffeePref()
-    gramsValue?.text = todayGramsOfCoffee.toString()
-  }
-
+  //SnackBar
   private fun saveCoffeeIntakeSnackbar(intake: Int) {
     val mySnackbar = Snackbar.make(findViewById<CoordinatorLayout>(R.id.main_coordinator), R.string.intake_saved, Snackbar.LENGTH_LONG)
     mySnackbar.setAction(R.string.undo_string, SnackBarUndoListener(intake))

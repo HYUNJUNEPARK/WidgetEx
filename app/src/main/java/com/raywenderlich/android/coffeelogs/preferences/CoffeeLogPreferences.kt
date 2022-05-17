@@ -38,11 +38,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class CoffeeLogPreferences(private val context: Context) {
-//  companion object {
-//    private const val PREFS_NAME = "com.raywenderlich.android.coffeelogs.widget.CoffeeLoggerWidget"
-//    private const val PREF_TODAY_TOTAL_COFFEE_KEY = "today_coffee_logger_"
-//    private const val PREF_LIMIT_KEY = "coffee_limit"
-//  }
   private val strFormatter = SimpleDateFormat("yyyyMMdd")
 
   // Write the prefix to the SharedPreferences object for this widget
