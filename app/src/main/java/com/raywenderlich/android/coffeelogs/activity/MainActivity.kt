@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
-    gramsValue = findViewById<TextView?>(R.id.grams)
+    gramsValue = findViewById(R.id.grams)
     limitCoffeeTextView = findViewById(R.id.limitConfigure)
 
     resetTodayCoffee()
