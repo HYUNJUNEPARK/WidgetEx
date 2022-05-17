@@ -3,6 +3,10 @@
     package="com.raywenderlich.android.coffeelogs">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    //TODO CHECK
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -17,7 +21,7 @@
             android:exported="true"></service>
 
         <receiver
-            android:name=".widget.BootCompleteReceiver"
+            android:name=".receiver.BootCompleteReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -25,7 +29,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".widget.CoffeeLogReceiver"
+            android:name=".receiver.CoffeeLogReceiver"
             android:enabled="true"
             android:exported="true" />
 

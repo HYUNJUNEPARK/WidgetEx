@@ -1,15 +1,11 @@
-package com.raywenderlich.android.coffeelogs.widget
+package com.raywenderlich.android.coffeelogs.receiver
 
-import android.appwidget.AppWidgetManager
 import android.content.BroadcastReceiver
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
-import com.raywenderlich.android.coffeelogs.key.Constants
-import com.raywenderlich.android.coffeelogs.key.Constants.Companion.ADD_COFFEE_INTENT
-import com.raywenderlich.android.coffeelogs.key.Constants.Companion.TAG
+import com.raywenderlich.android.coffeelogs.constant.Constants.Companion.ADD_COFFEE_INTENT
+import com.raywenderlich.android.coffeelogs.constant.Constants.Companion.GRAMS_EXTRA
 import com.raywenderlich.android.coffeelogs.preferences.CoffeeLogPreferences
 import com.raywenderlich.android.coffeelogs.service.UpdateWidgetService
 
@@ -18,7 +14,7 @@ class CoffeeLogReceiver : BroadcastReceiver() {
         if (intent != null && intent.action == ADD_COFFEE_INTENT) {
             val coffeeLogPreferences = CoffeeLogPreferences(context)
             val todayCoffee = coffeeLogPreferences.getTodayCoffeePref()
-            val coffeeIntake = intent.getIntExtra(Constants.GRAMS_EXTRA, 0)
+            val coffeeIntake = intent.getIntExtra(GRAMS_EXTRA, 0)
             val totalCoffee = todayCoffee + coffeeIntake
             coffeeLogPreferences.saveTodayCoffeePref(totalCoffee)
 

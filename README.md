@@ -240,3 +240,8 @@ https://codechacha.com/ko/android-action-boot-completed/</br>
 Android - Start service on boot</br>
 https://stackoverflow.com/questions/7690350/android-start-service-on-boot</br>
 
+Android - Foreground Service 실행</br>
+https://codechacha.com/ko/android-start-foreground-service/</br>
+
+How to startForeground() without showing notification?</br>
+https://stackoverflow.com/questions/10962418/how-to-startforeground-without-showing-notification</br>

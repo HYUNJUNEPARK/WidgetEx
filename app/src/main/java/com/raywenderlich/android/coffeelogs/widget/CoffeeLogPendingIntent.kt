@@ -5,7 +5,8 @@ import android.content.Context
 import android.content.Intent
 import com.raywenderlich.android.coffeelogs.R
 import com.raywenderlich.android.coffeelogs.activity.MainActivity
-import com.raywenderlich.android.coffeelogs.key.Constants
+import com.raywenderlich.android.coffeelogs.constant.Constants
+import com.raywenderlich.android.coffeelogs.receiver.CoffeeLogReceiver
 
 class CoffeeLogPendingIntent {
     fun getActivityPendingIntent(context: Context, grams: Int): PendingIntent {

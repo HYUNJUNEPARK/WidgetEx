@@ -31,9 +31,9 @@
 package com.raywenderlich.android.coffeelogs.preferences
 
 import android.content.Context
-import com.raywenderlich.android.coffeelogs.key.Constants.Companion.PREFS_NAME
-import com.raywenderlich.android.coffeelogs.key.Constants.Companion.PREF_LIMIT_KEY
-import com.raywenderlich.android.coffeelogs.key.Constants.Companion.PREF_TODAY_TOTAL_COFFEE_KEY
+import com.raywenderlich.android.coffeelogs.constant.Constants.Companion.PREFS_NAME
+import com.raywenderlich.android.coffeelogs.constant.Constants.Companion.PREF_LIMIT_KEY
+import com.raywenderlich.android.coffeelogs.constant.Constants.Companion.PREF_TODAY_TOTAL_COFFEE_KEY
 import java.text.SimpleDateFormat
 import java.util.*
 

@@ -2,7 +2,6 @@ package com.raywenderlich.android.coffeelogs.activity
 
 import android.app.Activity
 import android.appwidget.AppWidgetManager
-import android.content.ComponentName
 import android.content.Intent
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
@@ -10,9 +9,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import com.raywenderlich.android.coffeelogs.preferences.CoffeeLogPreferences
-import com.raywenderlich.android.coffeelogs.widget.CoffeeLogWidget
 import com.raywenderlich.android.coffeelogs.R
-import com.raywenderlich.android.coffeelogs.key.Constants.Companion.SET_LIMIT_INTENT
+import com.raywenderlich.android.coffeelogs.constant.Constants.Companion.SET_LIMIT_INTENT
 import com.raywenderlich.android.coffeelogs.service.UpdateWidgetService
 
 class LimitSettingActivity : AppCompatActivity() {
@@ -41,13 +39,8 @@ class LimitSettingActivity : AppCompatActivity() {
         val limitCoffee = limitCoffeeEditText.text.toString()
         coffeeLogPreferences.saveLimitPref(limitCoffee.toInt())
 
-        //AppWidgetProvider 클래스 updateAppWidget 로 위젯의 상태를 업데이트
-
-
-        //updateWidget()
         val updateWidgetIntent = Intent(this, UpdateWidgetService::class.java)
         updateWidgetIntent.action = SET_LIMIT_INTENT
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             this.startForegroundService(updateWidgetIntent)
         }

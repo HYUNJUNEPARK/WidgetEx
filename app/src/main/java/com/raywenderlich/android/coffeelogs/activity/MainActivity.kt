@@ -40,14 +40,15 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
 import com.raywenderlich.android.coffeelogs.*
-import com.raywenderlich.android.coffeelogs.key.CoffeeTypes
-import com.raywenderlich.android.coffeelogs.key.Constants
+import com.raywenderlich.android.coffeelogs.constant.CoffeeTypes
+import com.raywenderlich.android.coffeelogs.constant.Constants.Companion.ADD_COFFEE_INTENT
+import com.raywenderlich.android.coffeelogs.constant.Constants.Companion.GRAMS_EXTRA
 import com.raywenderlich.android.coffeelogs.preferences.CoffeeLogPreferences
 import com.raywenderlich.android.coffeelogs.widget.CoffeeLogWidget
 
 class MainActivity : AppCompatActivity() {
   internal val coffeeLogPreferences = CoffeeLogPreferences(this)
-  var todayGramsOfCoffee: Int = 0
+  var todayCoffee: Int = 0
   private var gramsValue: TextView? = null
   private var limitCoffeeTextView: TextView? = null
 
@@ -61,10 +62,9 @@ class MainActivity : AppCompatActivity() {
     resetTodayCoffee()
     initLimitCoffee()
 
-
-    if (intent != null && intent.action == Constants.ADD_COFFEE_INTENT) {
-      val coffeeIntake = intent.getIntExtra(Constants.GRAMS_EXTRA, 0)
-      coffeeLogPreferences.saveTodayCoffeePref(todayGramsOfCoffee + coffeeIntake)
+    if (intent != null && intent.action == ADD_COFFEE_INTENT) {
+      val coffeeIntake = intent.getIntExtra(GRAMS_EXTRA, 0)
+      coffeeLogPreferences.saveTodayCoffeePref(todayCoffee + coffeeIntake)
       saveCoffeeIntakeSnackbar(coffeeIntake)
     }
   }
@@ -75,17 +75,17 @@ class MainActivity : AppCompatActivity() {
   }
 
   fun onRistrettoPressed(v: View) {
-    coffeeLogPreferences.saveTodayCoffeePref(todayGramsOfCoffee + CoffeeTypes.RISTRETTO.grams)
+    coffeeLogPreferences.saveTodayCoffeePref(todayCoffee + CoffeeTypes.RISTRETTO.grams)
     saveCoffeeIntakeSnackbar(CoffeeTypes.RISTRETTO.grams)
   }
 
   fun onEspressoPressed(v: View) {
-    coffeeLogPreferences.saveTodayCoffeePref(todayGramsOfCoffee + CoffeeTypes.ESPRESSO.grams)
+    coffeeLogPreferences.saveTodayCoffeePref(todayCoffee + CoffeeTypes.ESPRESSO.grams)
     saveCoffeeIntakeSnackbar(CoffeeTypes.ESPRESSO.grams)
   }
 
   fun onLongPressed(v: View) {
-    coffeeLogPreferences.saveTodayCoffeePref(todayGramsOfCoffee + CoffeeTypes.LONG.grams)
+    coffeeLogPreferences.saveTodayCoffeePref(todayCoffee + CoffeeTypes.LONG.grams)
     saveCoffeeIntakeSnackbar(CoffeeTypes.LONG.grams)
   }
 
@@ -102,8 +102,8 @@ class MainActivity : AppCompatActivity() {
     updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds)
     sendBroadcast(updateIntent)
 
-    todayGramsOfCoffee = coffeeLogPreferences.getTodayCoffeePref()
-    gramsValue?.text = todayGramsOfCoffee.toString()
+    todayCoffee = coffeeLogPreferences.getTodayCoffeePref()
+    gramsValue?.text = todayCoffee.toString()
   }
 
   private fun saveCoffeeIntakeSnackbar(intake: Int) {
@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity() {
 
   inner class SnackbarUndoListener(private val intake: Int) : View.OnClickListener {
     override fun onClick(v: View) {
-      val originGrams = todayGramsOfCoffee - intake
+      val originGrams = todayCoffee - intake
       coffeeLogPreferences.saveTodayCoffeePref(originGrams)
       resetTodayCoffee()
     }

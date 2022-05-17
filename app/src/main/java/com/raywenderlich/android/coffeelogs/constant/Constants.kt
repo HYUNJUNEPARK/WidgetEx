@@ -28,20 +28,27 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.coffeelogs.key
+package com.raywenderlich.android.coffeelogs.constant
 
 class Constants {
   companion object {
+    //Log
     const val TAG = "testLog"
 
+    //coffeeLog
     const val GRAMS_EXTRA = "COFFEE_GRAMS"
     const val ADD_COFFEE_INTENT = "ADD_COFFEE"
     const val SET_LIMIT_INTENT = "LIMIT_COFFEE"
     const val LOAD_QUOTE_INTENT = "LOAD_QUOTE"
+
     //Preferences
-    const val REFRESH_INTENT = "REFRESH_WIDGET"
     const val PREFS_NAME = "com.raywenderlich.android.coffeelogs.widget.CoffeeLoggerWidget"
     const val PREF_TODAY_TOTAL_COFFEE_KEY = "today_coffee_logger_"
     const val PREF_LIMIT_KEY = "coffee_limit"
+    const val BOOT_COMPLETED = "android.intent.action.BOOT_COMPLETED"
+
+    //foreground service
+    const val CHANNEL_ID = "ForegroundChannel"
+    const val CHANNEL_NAME = "Foreground"
   }
 }

@@ -28,7 +28,7 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.coffeelogs.key
+package com.raywenderlich.android.coffeelogs.constant
 
 enum class CoffeeTypes(val grams: Int) {
   RISTRETTO(4),

@@ -48,7 +48,7 @@
         <TextView style="@style/WidgetButtonHorizontalSpace" />
 
         <LinearLayout
-            android:id="@+id/ristretto_button"
+            android:id="@+id/ristretto_activity_button"
             style="@style/WidgetBeverageButton">
 
             <ImageView
@@ -64,7 +64,7 @@
         <TextView style="@style/WidgetButtonHorizontalSpace" />
 
         <LinearLayout
-            android:id="@+id/espresso_button"
+            android:id="@+id/espresso_activity_button"
             style="@style/WidgetBeverageButton">
 
             <ImageView
@@ -80,7 +80,7 @@
         <TextView style="@style/WidgetButtonHorizontalSpace" />
 
         <LinearLayout
-            android:id="@+id/long_button"
+            android:id="@+id/long_activity_button"
             style="@style/WidgetBeverageButton">
 
             <ImageView
@@ -107,7 +107,7 @@
         <TextView style="@style/WidgetButtonHorizontalSpace" />
 
         <LinearLayout
-            android:id="@+id/ristretto_service_button"
+            android:id="@+id/ristretto_broadcast_button"
             style="@style/WidgetBeverageButton">
 
             <ImageView
@@ -123,7 +123,7 @@
         <TextView style="@style/WidgetButtonHorizontalSpace" />
 
         <LinearLayout
-            android:id="@+id/espresso_service_button"
+            android:id="@+id/espresso_broadcast_button"
             style="@style/WidgetBeverageButton">
 
             <ImageView
@@ -139,7 +139,7 @@
         <TextView style="@style/WidgetButtonHorizontalSpace" />
 
         <LinearLayout
-            android:id="@+id/long_service_button"
+            android:id="@+id/long_broadcast_button"
             style="@style/WidgetBeverageButton">
 
             <ImageView
