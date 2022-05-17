@@ -81,7 +81,6 @@ class MainActivity : AppCompatActivity() {
     val updateIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
     updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds)
     sendBroadcast(updateIntent)
-
     todayGramsOfCoffee = coffeeLogPreferences.getTodayCoffeePref()
     gramsValue?.text = todayGramsOfCoffee.toString()
   }
