@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+  android:configure="com.raywenderlich.android.coffeelogs.activity.SettingLimitActivity"
+  android:initialKeyguardLayout="@layout/coffee_logger_widget"
+  android:initialLayout="@layout/coffee_logger_widget"
+  android:minHeight="200dp"
+  android:minWidth="200dp"
+  android:previewImage="@drawable/ic_baseline_coffee_24"
+  android:updatePeriodMillis="86400000"
+  android:widgetCategory="home_screen"/>
