@@ -32,6 +32,7 @@
             android:layout_height="50dp"
             android:inputType="number"
             android:gravity="center"
+            android:backgroundTint="@color/gray"
             android:textSize="15sp"
             android:textStyle="bold" />
 

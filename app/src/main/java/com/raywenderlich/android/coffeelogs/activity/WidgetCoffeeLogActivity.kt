@@ -1,38 +1,37 @@
 package com.raywenderlich.android.coffeelogs.activity
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
-import com.raywenderlich.android.coffeelogs.databinding.ActivityWidgetCoffeeLogBinding
+import android.widget.EditText
+import com.raywenderlich.android.coffeelogs.R
 import com.raywenderlich.android.coffeelogs.preferences.CoffeeLogPreferences
 import com.raywenderlich.android.coffeelogs.widget.UpdateWidget
 
 class WidgetCoffeeLogActivity : AppCompatActivity() {
-    //TODO viewBinding 통일성
-    private val binding by lazy { ActivityWidgetCoffeeLogBinding.inflate(layoutInflater) }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_widget_coffee_log)
+
+
     }
 
     fun initCloseButton(v: View) {
         finish()
     }
 
-
-    //TODO ERROR java.lang.IllegalStateException: Could not execute method for android:onClick
     fun initConfirmButton(v: View) {
-        val userInput: String? = binding.userInputEditText.text.toString()
-        if(userInput == null) return
+        //get userInput
+        val _userInput = findViewById<EditText>(R.id.userInputEditText).text.toString()
+        val userInput = if (_userInput == "") "0" else _userInput
 
-
-
+        //preference
         val coffeeLogPreferences = CoffeeLogPreferences(this)
         val todayCoffee = coffeeLogPreferences.getTodayCoffeePref()
-
-        val totalCoffee = todayCoffee + userInput!!.toInt()
+        val totalCoffee = todayCoffee + userInput.toInt()
         coffeeLogPreferences.saveTodayCoffeePref(totalCoffee)
+
+        //update
         val updateWidget = UpdateWidget()
         updateWidget.updateWidget(this)
         finish()

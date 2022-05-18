@@ -55,6 +55,9 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
+//    val actionBar = actionBar
+//    actionBar.setDisplayShowTitleEnabled(false)
+
     gramsValue = findViewById(R.id.grams)
     limitCoffeeTextView = findViewById(R.id.limitConfigure)
 

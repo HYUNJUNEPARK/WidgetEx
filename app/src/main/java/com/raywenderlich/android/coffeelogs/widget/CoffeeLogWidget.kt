@@ -9,6 +9,7 @@ import android.content.Context
  */
 class CoffeeLogWidget : AppWidgetProvider() {
   override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+    //update
     val updateWidget = UpdateWidget()
     updateWidget.updateWidget(context)
   }
